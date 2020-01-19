@@ -101,45 +101,44 @@ class Application
         $siteController = new SiteController();
         $userController = new UserController();
 
-        $_router->get('/', function() {
+        $_router->get('/', function() use ($siteController) {
             $siteController->list();
         });
 
-        $_router->get('/list', function() {
+        $_router->get('/list', function() use ($siteController) {
             $siteController->list();
         });
 
-        $_router->get('/login', function() {
+        $_router->get('/login', function() use ($userController) {
             $userController->login();
         });
 
-        $_router->post('/login', function() {
+        $_router->post('/login', function() use ($userController) {
             $userController->login();
         });
 
-        $_router->get('/profile', function() {
+        $_router->get('/profile', function() use ($userController) {
             $userController->profile();
         });
 
-        $_router->post('/logout', function() {
+        $_router->post('/logout', function() use ($userController) {
             $userController->logout();
         });
 
-
-        $_router->get('/task/add', function() {
-            $userController->addTask();
+        $_router->get('/task/add', function() use ($siteController) {
+            $siteController->addTask();
         });
 
-        $_router->post('/task/add', function() {
-            $userController->addTask();
+        $_router->post('/task/add', function() use ($siteController) {
+            $siteController->addTask();
         });
 
-        $_router->get('/task/update', function() {
-            $userController->updateTask();
+        $_router->get('/task/update', function() use ($siteController) {
+            $siteController->updateTask();
         });
 
-        $_router->post('/task/update', function() {
-            $userController->updateTask();
+        $_router->post('/task/update', function() use ($siteController) {
+            $siteController->updateTask();
         });
 
         $_router->before('GET', '/profile.*', function () {
