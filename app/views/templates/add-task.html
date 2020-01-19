@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+
+{% block title %}Авторизация{% endblock %}
+{% block head %}
+{{ parent() }}
+
+<style>
+    .form-check-label {
+        background-position: left;
+        background-repeat: no-repeat;
+        padding-left: 1.5rem;
+    }
+
+    .btn-success {
+        cursor: pointer;
+    }
+
+    #add-task-form {
+        margin-top: 2%;
+        margin-left: 2%;
+    }
+
+    #add-task-form input[type="submit"] {
+        width: 100%;
+    }
+</style>
+{% endblock %}
+{% block content %}
+{{ parent() }}
+
+<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <p>Задача созданна</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<div id="add-task-form">
+    <form class="form-horizontal" method="POST" id="add_task_form">
+        <div class="row">
+            <div class="col-md-6 text-left">
+                <h2>Создать задачу</h2>
+                <hr>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group has-danger">
+                    <div class="input-group mb-4 mr-sm-4 mb-sm-4">
+                        <div class="input-group-addon" style="width: fit-content;width:30%">Имя пользователя</div>
+                        <input type="text" name="username" class="form-control" id="username" placeholder="Имя пользователя"
+                            autocomplete="off" required autofocus/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="input-group mb-4 mr-sm-4 mb-sm-4">
+                        <div class="input-group-addon" style="width: fit-content;width:30%">Email</div>
+                        <input type="email" name="email" class="form-control" id="email" placeholder="Email"
+                            required/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="input-group mb-4 mr-sm-4 mb-sm-4">
+                        <div class="input-group-addon" style="width: fit-content;width:30%">Текст задачи</div>
+                        <textarea class="form-control" id="text" name="text" id="text" rows="3" placeholder="Текст задачи"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <input type="submit" class="btn btn-success" value="Создать">
+                <label class="form-check-label">
+                    <span class="text-danger align-middle" id="errorMsg"></span>
+                </label>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+    </form>
+</div>
+
+{% endblock %}
+{% block footer %}
+{{ parent() }}
+
+<script>
+    $(document).ready(function () {
+        $("#add_task_form").submit(function (event) {
+            event.preventDefault();
+            $.ajax({
+                url: '/task/add',
+                type: 'POST',
+                data: { username: $("#username").val(), email: $("#email").val(),text: $("#text").val() },
+                success: function (response) {
+                    response = JSON.parse(response);
+                    if (response.status) {
+                        $(".modal").show();
+
+                        setTimeout(function(){
+                            window.location.href = '/';
+                        }, 1000);
+                    } else {
+                        $("#errorMsg").html(response.errorMsg);
+                    }
+                }
+            });
+        });
+    });
+</script>
+
+
+{% endblock %}

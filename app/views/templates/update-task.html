@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+
+{% block title %}Изменить задачу{% endblock %}
+{% block head %}
+{{ parent() }}
+
+<style>
+    .form-check-label {
+        background-position: left;
+        background-repeat: no-repeat;
+        padding-left: 1.5rem;
+    }
+
+    .btn-success {
+        cursor: pointer;
+    }
+
+    #update-task-form {
+        margin-top: 2%;
+        margin-left: 2%;
+    }
+
+    #update-task-form input[type="submit"] {
+        width: 100%;
+    }
+
+    .checkbox-inline input {
+        margin-right:10px;
+    }
+</style>
+{% endblock %}
+{% block content %}
+{{ parent() }}
+
+<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p>Задача обновлена</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="update-task-form">
+    <form class="form-horizontal" method="POST" id="update_task_form">
+        <div class="row">
+            <div class="col-md-6 text-left">
+                <h2>Обновить задачу</h2>
+                <hr>
+            </div>
+        </div>
+        <input type="hidden" name="id" class="form-control" id="id" value="{{ task.id }}">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group has-danger">
+                    <div class="input-group mb-4 mr-sm-4 mb-sm-4">
+                        <div class="input-group-addon" style="width: fit-content;width:30%">Имя пользователя</div>
+                        <input type="text" name="username" class="form-control" id="username"
+                            placeholder="Имя пользователя" value="{{ task.username }}" autocomplete="off" required
+                            autofocus />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="input-group mb-4 mr-sm-4 mb-sm-4">
+                        <div class="input-group-addon" style="width: fit-content;width:30%">Email</div>
+                        <input type="email" name="email" class="form-control" id="email" placeholder="Email"
+                            value="{{ task.email }}" required />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="input-group mb-4 mr-sm-4 mb-sm-4">
+                        <div class="input-group-addon" style="width: fit-content;width:30%">Текст задачи</div>
+                        <textarea class="form-control" id="text" name="text" id="text" rows="3"
+                            placeholder="Текст задачи">{{ task.text }}</textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="row" >
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="input-group mb-4 mr-sm-4 mb-sm-4">
+                        <label class="checkbox-inline input-group-addon" ><input type="checkbox" name="status"  id="status" {% if task.status == 1 %} checked {% endif %} />Выполнено</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-6">
+                <input type="submit" class="btn btn-success" value="Изменить">
+                <label class="form-check-label">
+                    <span class="text-danger align-middle" id="errorMsg"></span>
+                </label>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+    </form>
+</div>
+
+{% endblock %}
+{% block footer %}
+{{ parent() }}
+
+<script>
+    $(document).ready(function () {
+        $("#update_task_form").submit(function (event) {
+            event.preventDefault();
+            $.ajax({
+                url: '/task/update',
+                type: 'POST',
+                data: { id: $("#id").val(), username: $("#username").val(), email: $("#email").val(), text: $("#text").val(), status: $("#status").val()},
+                success: function (response) {
+                    response = JSON.parse(response);
+                    if (response.status) {
+                        $(".modal").show();
+                        setTimeout(function () {
+                            window.location.href = '/';
+                        }, 1000);
+                    } else {
+                        if(response.code && response.code == 403) {
+                            window.location.href = '/login';
+                        } else {
+                            $("#errorMsg").html(response.errorMsg);
+                        }
+                        
+                    }
+                }
+            });
+        });
+    });
+</script>
+
+
+{% endblock %}

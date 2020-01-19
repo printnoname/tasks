@@ -1,0 +1,4 @@
+vendor/
+configs/config-local.php
+phinx.yml
+composer.lock

@@ -1,0 +1,24 @@
+{
+    "name": "beejee/tasks",
+    "type": "project",
+    "description": "Test task for BeeJee",
+    "authors": [
+        {
+            "name": "printnoname",
+            "email": "printnoname@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "bramus/router": "dev-master",
+        "robmorgan/phinx": "dev-master",
+        "twig/twig": "3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Core\\": "core/",
+            "App\\": "app/",
+            "Libs\\": "libs/"
+        }
+    }
+}
