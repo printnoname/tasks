@@ -6,6 +6,13 @@ use App\Services\TaskService;
 use Core\Controller;
 use Core\Paginator;
 
+/**
+ * Основной контроллер.
+ * 
+ * 
+ * @package   App\Controllers
+ * @author    Levan Buchukuri <Levanbuchukuri1993@gmail.com>
+ */
 class SiteController extends Controller
 {
 

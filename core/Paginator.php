@@ -1,6 +1,13 @@
 <?php
 namespace Core;
 
+/**
+ * Пагинатор
+ * 
+ * 
+ * @package   Core
+ * @author    Levan Buchukuri <Levanbuchukuri1993@gmail.com>
+ */
 class Paginator {
     
     private $page; 
@@ -21,11 +28,11 @@ class Paginator {
         return $this->perPage;
     }
 
-    public function getOffset() {
-        return ($this->getCurrentPage() - 1) * $this->getPerPage();
-    }
-
     public function getTotalPages(){
         return $this->totalPages;
+    }
+
+    public function getOffset() {
+        return ($this->getCurrentPage() - 1) * $this->getPerPage();
     }
 }

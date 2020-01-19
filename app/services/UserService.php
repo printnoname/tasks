@@ -3,6 +3,13 @@ namespace App\Services;
 
 use Core\Service;
 
+/**
+ * Сервис для работы с пользователем и авторизацией
+ * 
+ * 
+ * @package   App\Services
+ * @author    Levan Buchukuri <Levanbuchukuri1993@gmail.com>
+ */
 class UserService extends Service
 {
 

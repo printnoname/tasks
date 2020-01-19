@@ -4,14 +4,36 @@ namespace Core;
 
 use \Bramus\Router\Router;
 
+/**
+ * 
+ * Application является центральном ядром системы. Через него осуществляется доступ к шаблонизатору, дб и роутингу
+ * 
+ * @package   Core
+ * @author    Levan Buchukuri <Levanbuchukuri1993@gmail.com>
+ */
+
 class Application
 {
 
     private static $instance = null;
 
+    /**
+     * $router
+     *
+     * \Bramus\Router\Router Роутер
+     */
     private $router;
+    /**
+     * $db
+     *
+     * \Core\DB хелпер для доступа к базе
+     */
     private $db;
-    private $config;
+    /**
+     * $twig ссылка на TwigLoader
+     *
+     * @var undefined
+     */
     private $twig;
 
     public static function init($config)
@@ -26,9 +48,16 @@ class Application
         return self::$instance;
     }
 
+    /**
+     * __construct
+     * 
+     * При создании экзэмпляра Application создаются также экзэмпляры DB и Роутера
+     * 
+     * @param array $config Конфигурационный массив с данными для подключения базы данных
+     * @return void
+     */
     protected function __construct($config)
     {
-        $this->config = $config;
         $this->router = $this->initRouter();
 
         $this->db = $this->initDbConnection($config);
@@ -41,12 +70,27 @@ class Application
         $this->twig = $twig;
     }
 
+    
+    /**
+     * run
+     *
+     * Установка соединения с DB и запуск Роутера
+     * @return void
+     */
     public function run()
     {
         $this->db->connect();
         $this->router->run();
     }
 
+
+    /**
+     * initRouter
+     * 
+     * Установка путей и midllewares
+     *
+     * @return void
+     */
     private function initRouter()
     {
 

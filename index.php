@@ -1,5 +1,9 @@
 <?php 
 
+/**
+ * Входная точка приложения
+ * Здесь инициализируется ядро сайта
+ */
 require './vendor/autoload.php';
 
 	use Core\Application;

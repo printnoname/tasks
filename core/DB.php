@@ -2,6 +2,12 @@
 
     namespace Core;
 
+    /**
+    * Хэлпер для работы с базой данных и pdo
+    * 
+    * @package   Core
+    * @author    Levan Buchukuri <Levanbuchukuri1993@gmail.com>
+    */
     class DB {
         private $configData;
         private $pdoConnection;

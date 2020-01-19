@@ -4,7 +4,15 @@
     use App\Services\UserService;
     use Core\Controller;
 
+    /**
+    * Контроллер для работы с пользователем
+    * 
+    * 
+    * @package   App\Controllers
+    * @author    Levan Buchukuri <Levanbuchukuri1993@gmail.com>
+    */
     class UserController extends Controller{
+        
         public function login() {
     
             if(!empty($_POST)){

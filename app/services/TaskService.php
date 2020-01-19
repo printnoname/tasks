@@ -5,6 +5,13 @@ namespace App\Services;
 use App\Models\Task;
 use Core\Service;
 
+/**
+ * Сервис для работы с задачами
+ * 
+ * 
+ * @package   App\Services
+ * @author    Levan Buchukuri <Levanbuchukuri1993@gmail.com>
+ */
 class TaskService extends Service
 {
 
