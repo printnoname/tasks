@@ -3,6 +3,8 @@
 namespace Core;
 
 use \Bramus\Router\Router;
+use App\Controllers\SiteController;
+use App\Controllers\UserController;
 
 /**
  * 
@@ -95,24 +97,50 @@ class Application
     {
 
         $_router = new Router;
-        $_router->setNamespace('\App\Controllers');
 
-        $_router->get('/', 'SiteController@list');
-        $_router->get('/list', 'SiteController@list');
+        $siteController = new SiteController();
+        $userController = new UserController();
 
-        $_router->post('/login', 'UserController@login');
+        $_router->get('/', function() {
+            $siteController->list();
+        });
 
-        $_router->get('/login', 'UserController@login');
+        $_router->get('/list', function() {
+            $siteController->list();
+        });
 
-        $_router->get('/profile', 'UserController@profile');
+        $_router->get('/login', function() {
+            $userController->login();
+        });
 
-        $_router->post('/logout','UserController@logout');
+        $_router->post('/login', function() {
+            $userController->login();
+        });
 
-        $_router->get('/task/add','SiteController@addTask');
-        $_router->post('/task/add','SiteController@addTask');
+        $_router->get('/profile', function() {
+            $userController->profile();
+        });
 
-        $_router->get('/task/update','SiteController@updateTask');
-        $_router->post('/task/update','SiteController@updateTask');
+        $_router->post('/logout', function() {
+            $userController->logout();
+        });
+
+
+        $_router->get('/task/add', function() {
+            $userController->addTask();
+        });
+
+        $_router->post('/task/add', function() {
+            $userController->addTask();
+        });
+
+        $_router->get('/task/update', function() {
+            $userController->updateTask();
+        });
+
+        $_router->post('/task/update', function() {
+            $userController->updateTask();
+        });
 
         $_router->before('GET', '/profile.*', function () {
             if(!isset($_SESSION['username'])) {
