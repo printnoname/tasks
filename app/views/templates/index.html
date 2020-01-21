@@ -343,7 +343,7 @@
                                 {% for task in tasks %}
                                 <tr>
                                     <td>{{ task.username }}</td>
-                                    <td class="text">{{ task.text }}</td>
+                                    <td class="text">{{ task.text | escape('html') }}</td>
                                     <td>{{ task.email }}</td>
                                     <td>
                                         {% if task.status == 0 %} <span class="badge badge-pill badge-danger">Не

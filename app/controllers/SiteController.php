@@ -91,15 +91,14 @@ class SiteController extends Controller
             if($id) {
                 $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_SPECIAL_CHARS);
                 $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_SPECIAL_CHARS);
-                $text = filter_input(INPUT_POST, 'text', FILTER_SANITIZE_SPECIAL_CHARS);
+                $text = \trim($text);
                 $status = filter_input(INPUT_POST, 'status', FILTER_SANITIZE_SPECIAL_CHARS);
 
-                if($status == "on") {
+                if($status == "true") {
                     $status = 1;
                 } else {
                     $status = 0;
                 }
-
                 $result = $taskService->updateTask(
                     [   'id' => $id,
                         'username' => $username,

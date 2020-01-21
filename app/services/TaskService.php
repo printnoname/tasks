@@ -72,7 +72,7 @@ class TaskService extends Service
         $taskOld = $this->getTaskById($id);
         
         if(!$taskOld->edited) {
-            if($taskOld->text != $data['text']) {
+            if(strcmp($taskOld->text,$data['text']) != 0) {
                 $edited = true;
             }
         } else {
@@ -90,12 +90,12 @@ class TaskService extends Service
         );
 
         $validation = $task->validateEditedTask();
-
+        
         if ($validation['status']) {
             try {
                 $sql = "UPDATE tasks  SET username=?, email=?, text=?, status=?, edited=? WHERE id=?";
                 $stmn = $this->pdo->prepare($sql);
-                $result = $stmn->execute([$task->username,$task->email,$task->text,(int) $task->status,(int) $task->edited,$task->id]);
+                $result = $stmn->execute([$task->username,$task->email,$task->text, $task->status,(int) $task->edited,$task->id]);
             } catch (\Exception $ex) {
                 return ['status' => false, 'errorMsg' => ['При записи в базу произошла непредвиденная ошибка',$ex->getMessage()]];
             }

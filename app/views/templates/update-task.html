@@ -123,7 +123,7 @@
             $.ajax({
                 url: '/task/update',
                 type: 'POST',
-                data: { id: $("#id").val(), username: $("#username").val(), email: $("#email").val(), text: $("#text").val(), status: $("#status").val()},
+                data: { id: $("#id").val(), username: $("#username").val(), email: $("#email").val(), text: $("#text").val(), status: $("#status").is(':checked')},
                 success: function (response) {
                     response = JSON.parse(response);
                     if (response.status) {
