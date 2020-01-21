@@ -60,7 +60,7 @@ class SiteController extends Controller
 
             $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_SPECIAL_CHARS);
             $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_SPECIAL_CHARS);
-            $text = filter_input(INPUT_POST, 'text', FILTER_SANITIZE_SPECIAL_CHARS);
+            $text = \trim($_POST['text']);
 
             $result = $taskService->createTask(
                 [
@@ -91,7 +91,7 @@ class SiteController extends Controller
             if($id) {
                 $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_SPECIAL_CHARS);
                 $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_SPECIAL_CHARS);
-                $text = \trim($text);
+                $text = \trim($_POST['text']);
                 $status = filter_input(INPUT_POST, 'status', FILTER_SANITIZE_SPECIAL_CHARS);
 
                 if($status == "true") {
